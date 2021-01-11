@@ -1,0 +1,19 @@
+{
+    "annotation": "/txt/tvr_raw_data/tvqa_preprocessed_subtitles.jsonl",
+    "vid_clip_h5_file": "/video/tvr_feature_release/tvr_resnet152_rgb_max_cl-1.5.h5",
+    "frame_length": 1.5,
+    "output": "/storage/TXT_DB/tv_subtitiles_roberta_base_v3.db",
+    "toker": "roberta-base",
+    "tokenizer": "roberta-base",
+    "BOS": 0,
+    "EOS": 2,
+    "SEP": 2,
+    "CLS": 0,
+    "PAD": 1,
+    "MASK": 50264,
+    "UNK": 3,
+    "v_range": [
+        4,
+        50261
+    ]
+}

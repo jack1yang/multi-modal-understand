@@ -23,7 +23,7 @@ class MetaLoader(object):
         self.name2loader = {}
         self.name2iter = {}
         self.sampling_pools = []
-        for n, l in loaders.items():
+        for n, l in loaders.items(): # loaders = {'tvr': (DataLoder, ratio)}
             if isinstance(l, tuple):
                 l, r = l
             elif isinstance(l, DataLoader):

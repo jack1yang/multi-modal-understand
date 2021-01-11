@@ -117,15 +117,16 @@ class FrameFeatureRegression(nn.Module):
 class HierarchicalVlModel(VideoPreTrainedModel):
     def __init__(self, config, vfeat_dim, max_frm_seq_len,
                  max_clip_len=100, nce_temp=1.0):
+        """
+        vfeat_dim: input video embedder resnet+slowfast 
+        """
         super().__init__(config)
-        self.f_encoder = CrossModalTrm(
-            config.f_config, vfeat_dim, max_frm_seq_len)
-        self.frame_transform = LinearLayer(
+        self.f_encoder = CrossModalTrm(config.f_config, vfeat_dim, max_frm_seq_len)
+        self.frame_transform = LinearLayer(  # video embedder's fc layer
             vfeat_dim, config.f_config.hidden_size,
             layer_norm=True, dropout=config.f_config.hidden_dropout_prob,
             relu=True)
-        self.c_encoder = TemporalTrm(
-            config.c_config)
+        self.c_encoder = TemporalTrm(config.c_config)
 
         self.feat_regress = FrameFeatureRegression(
             config.f_config.hidden_size, vfeat_dim)
@@ -245,7 +246,7 @@ class HierarchicalVlModel(VideoPreTrainedModel):
         mask = self.mask_embedding(c_v_mask.long())
         c_v_feats_masked = c_v_feats + mask
         batch['c_v_feats'] = c_v_feats_masked
-        clip_outputs = self.forward_repr(batch)
+        clip_outputs = self.forward_repr(batch) # -> multibert -> temparalbert -> 
 
         # only compute masked tokens for better efficiency
         masked_output = self._compute_masked_hidden(clip_outputs, c_v_mask)

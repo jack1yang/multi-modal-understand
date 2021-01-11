@@ -29,6 +29,11 @@ def get_video_ids(query_txt_db):
 
 
 def load_video_sub_dataset(v_feat_path, sub_txt_db, vfeat_interval, opts):
+    """
+    v_feat_path: /video/tv
+    sub_txt_db: /txt/tv_subtitles.db
+    vfeat_interval: 1.5
+    """
     vfeat_db = VideoFeatLmdb(
         v_feat_path, opts.vfeat_version,
         vfeat_interval,  opts.compressed_db,
@@ -37,7 +42,7 @@ def load_video_sub_dataset(v_feat_path, sub_txt_db, vfeat_interval, opts):
         if "msrvtt" in opts.task:
             sub_txt_db = VrSubTokLmdb(sub_txt_db, opts.max_clip_len)
         else:
-            sub_txt_db = SubTokLmdb(sub_txt_db, opts.max_clip_len)
+            sub_txt_db = SubTokLmdb(sub_txt_db, opts.max_clip_len) # vid_sub2frame: sub owing corresponding frames, vid2vonly: unmatched frames
     video_db = VideoFeatSubTokDataset(
         sub_txt_db, vfeat_db,
         sub_ctx_len=opts.sub_ctx_len)
@@ -77,7 +82,7 @@ def build_downstream_dataloaders(
                 dataset = VideoQaEvalDataset(
                     video_ids, video_db, q_txt_db)
                 collate_fn = video_qa_eval_collate
-        elif task in ["tvr", "how2r", "didemo_video_sub"]:
+        elif task in ["tvr", "how2r", "didemo_video_sub"]: #tvr
             if is_train:
                 dataset = VcmrDataset(
                     video_ids, video_db, q_txt_db)

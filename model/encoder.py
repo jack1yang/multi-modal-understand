@@ -355,9 +355,9 @@ class CrossModalTrm(RobertaPreTrainedModel):
     def forward_mlm(self, input_ids, position_ids, img_feat, img_pos_ids,
                     attention_mask, gather_index, txt_mask_tgt,
                     txt_labels=None, compute_loss=True):
-        embedding_output = self._compute_img_txt_embeddings(
+        embedding_output = self._compute_img_txt_embeddings(  # compute input txt and image embedding
             input_ids, position_ids, img_feat, img_pos_ids, gather_index)
-        sequence_output = self.encoder(embedding_output, attention_mask)[0]
+        sequence_output = self.encoder(embedding_output, attention_mask)[0]  # bert compute
 
         # only compute masked tokens for better efficiency
         masked_output = self._compute_masked_hidden(sequence_output,

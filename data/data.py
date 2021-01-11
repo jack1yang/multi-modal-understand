@@ -229,7 +229,8 @@ class SubTokLmdb(TxtTokLmdb):
                 self.vid2idx[key] = {k: v[1] for k, v in info.items()}
         # else:
         #     raise ValueError(f"vid2dur_idx.json does not exists in {db_dir}")
-        self.vid_sub2frame, self.vid2vonly_frames =\
+        # vid_sub2frame: sub owing corresponding frames, vid2vonly: unmatched frames
+        self.vid_sub2frame, self.vid2vonly_frames =\ 
             self.compute_sub2frames()
 
     def compute_sub2frames(self):
@@ -361,7 +362,7 @@ class VideoFeatSubTokDataset(Dataset):
         num_subs = len(sub2frames)
 
         for sub_idx, matched_frames in sub2frames:
-            # text input
+            # text input (input_ids is the word idx in vocab)
             input_ids = []
             input_ids = [self.txt_db.sep] + input_ids
             for tmp_sub_idx in range(sub_idx-self.sub_ctx_len,

@@ -78,6 +78,9 @@ def create_mlm_io(input_ids, db, mask_prob, cls_tok=True):
 class VideoMlmDataset(Dataset):
     def __init__(self, video_ids, vid_sub_db, mask_prob=0.15,
                  sub_ctx_len=0):
+        """
+        vid_sub_db: instance of "data/data.py->VideoFeatSubTokDataset()"
+        """
         assert isinstance(vid_sub_db, VideoFeatSubTokDataset)
         self.mask_prob = mask_prob
         self.vid_sub_db = vid_sub_db
@@ -92,7 +95,7 @@ class VideoMlmDataset(Dataset):
 
     def __getitem__(self, i):
         vid = self.ids[i]
-        example = self.vid_sub_db.txt_db[vid]
+        example = self.vid_sub_db.txt_db[vid] # one piece of source data
         v_feat, nframes = self.vid_sub_db._get_v_feat(vid)
         sub2frames = self.vid_sub_db.vid_sub2frame[vid]
         num_subs = len(sub2frames)

@@ -61,7 +61,7 @@ def main(opts):
     # train_examples = None
     LOGGER.info(f"Loading the whole video dataset {opts.sub_txt_db}, "
                 f"{opts.vfeat_db}")
-    if opts.task != "didemo_video_only":
+    if opts.task != "didemo_video_only": #'tvr'
         video_db = load_video_sub_dataset(
             opts.vfeat_db, opts.sub_txt_db,
             opts.vfeat_interval, opts)
@@ -80,7 +80,7 @@ def main(opts):
         [opts.task], video_db, video_ids,
         True, opts, shuffle=True,
         q_txt_db=train_q_txt_db)
-    meta_loader = MetaLoader(train_dataloaders,
+    meta_loader = MetaLoader(train_dataloaders,  # -> {'tvr': (DataLoder, ratio)}
                              accum_steps=opts.gradient_accumulation_steps,
                              distributed=n_gpu > 1)
     meta_loader = PrefetchLoader(meta_loader)

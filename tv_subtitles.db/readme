@@ -1,0 +1,10 @@
+vid_name : video's name 
+sub: [[text: "....", start_timestap, end_ts], ...] 所有的字幕，以list组织
+input_ids: [[list1], [list2],...] 字幕单词对应的idx
+unique_sub2frames: 每条字幕对应的视频帧
+sub2frames: 每条字幕对应的视频帧
+unmatched_frames: 
+v_id: 同video_name
+duration: 总帧数
+
+

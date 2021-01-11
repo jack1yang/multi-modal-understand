@@ -52,10 +52,11 @@ def build_target_loaders(target, tgt_ratio, opts):
             for shard in target['vfeat_shards']
         ]
     else:
+        # video_db -> data/data.py No.392
         video_db = load_video_sub_dataset(
-            f"{opts.img_db}/{target['vfeat_db']}",
-            f"{opts.txt_db}/{target['sub_txt_db']}",
-            target['vfeat_interval'], opts)
+            f"{opts.img_db}/{target['vfeat_db']}", # /video/tv/
+            f"{opts.txt_db}/{target['sub_txt_db']}", # /txt/tv_subtitles.db
+            target['vfeat_interval'], opts)  # 1.5, opts
     train_loaders = {}
     val_loaders = {}
     for split in target['splits']:
@@ -171,7 +172,7 @@ def main(opts):
     train_dataloaders = {}
     val_dataloaders = {}
     for target, t_r in zip(opts.targets, opts.targets_ratio):
-        train_loaders, val_loaders = build_target_loaders(target, t_r, opts)
+        train_loaders, val_loaders = build_target_loaders(target, t_r, opts) # -> choose which task and get corrsponding task dataloder
         train_dataloaders.update(train_loaders)
         val_dataloaders.update(val_loaders)
     meta_loader = MetaLoader(train_dataloaders,
