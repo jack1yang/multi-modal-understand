@@ -1,4 +1,4 @@
-# 读取视频的一些方法：1）ffmpeg工具；2）cv2.VideoCapture()方法；3）skvideo包
+# 读取视频的一些方法：1）ffmpeg工具；2）cv2.VideoCapture()方法；3）skvideo包 4）video2frame工具 https://github.com/jinyu121/video2frame
 
 # 首先介绍ffmpeg工具和一些常用命令，  参考https://www.jianshu.com/p/2c00a1a59af1
 # 主要参数: 
