@@ -95,8 +95,8 @@ class VideoMlmDataset(Dataset):
 
     def __getitem__(self, i):
         vid = self.ids[i]
-        example = self.vid_sub_db.txt_db[vid] # one piece of source data
-        v_feat, nframes = self.vid_sub_db._get_v_feat(vid)
+        example = self.vid_sub_db.txt_db[vid] # one piece of source subtile data
+        v_feat, nframes = self.vid_sub_db._get_v_feat(vid) # corrsponding visual features
         sub2frames = self.vid_sub_db.vid_sub2frame[vid]
         num_subs = len(sub2frames)
         outputs = []
@@ -110,7 +110,7 @@ class VideoMlmDataset(Dataset):
                     if self.vid_sub_db.max_txt_len != -1:
                         in_ids = in_ids[:self.vid_sub_db.max_txt_len]
                     orig_input_ids.extend(copy.deepcopy(in_ids))
-            input_ids, txt_labels = create_mlm_io(
+            input_ids, txt_labels = create_mlm_io(   # mask input words for mlm task, if masked then set corresponding txt_labels's position to ~-1
                 orig_input_ids, self.vid_sub_db.txt_db,
                 self.mask_prob)
 

@@ -262,7 +262,7 @@ class CrossModalTrm(RobertaPreTrainedModel):
         if input_ids is not None:
             # txt only
             txt_emb = self._compute_txt_embeddings(
-                input_ids, position_ids, txt_type_ids)
+                input_ids, position_ids, txt_type_ids)  # word embedding + position embedding + type embedding
         if img_feat is not None:
             # image only
             img_emb = self._compute_img_embeddings(
